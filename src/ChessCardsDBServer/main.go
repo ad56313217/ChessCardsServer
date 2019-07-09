@@ -48,11 +48,12 @@ func main() {
 	updateData(DB)
 	deleteData(DB)
 
-	if GoTest.IsHasDb("users", DB) == true {
-		fmt.Printf("Open mysql failed,err:%v\n", err)
+	if GoTest.IsHasTable("ChessCards", "test1", DB) == true {
+		//GoTest.DeleteTable("test1", "test2", DB)
+		fmt.Printf("Has Table")
 	} else {
-		GoTest.CreateDb("users", DB)
-		fmt.Printf("Create Success!")
+		GoTest.CreateTable("ChessCards", "test2", DB)
+		fmt.Printf("Has no Table")
 	}
 }
 
