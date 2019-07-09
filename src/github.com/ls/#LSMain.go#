@@ -1,0 +1,35 @@
+package main
+
+import (
+	"fmt"
+	"testgogrammer"
+)
+
+
+func testPut(result,value){
+	
+	return 10,false
+}
+
+func initPro()
+{
+	
+}
+
+func tickPro()
+{
+
+}
+
+func MainThread()
+{
+
+}
+
+
+func main(){
+	
+
+	fmt.Println("--- start LSMain ----")
+	
+}
