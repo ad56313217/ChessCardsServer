@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+
+<headkey a="alltype" >
+	<a a="outfile" desc="输出的文件名字 不用带.h或.cpp 会自动加" />
+	<!-- ex: <a outfile="svr_to_clt_netmsg" /> or <a outfile="db_make_test" /> -->
+	<a a="outdir" desc="输出文件路径，没有会自动创建对应目录" />
+	<!-- ex: <a outdir="d:\\test\\test1" /> -->
+	
+	<a a="usdhead" desc="是否使用消息头" />
+	<a a="headvaluetype" desc="头类型u8|u16|u32" />
+	<a a="usdheadex" desc="头扩展 以防止重复" />
+	<a a="headadd_ft" desc="消息包头会处理len和cmd还会增加fromid和toid" />
+	<a a="headadd_ft_type" desc="u8|u16|u32" />
+	<!-- 这ex: <a usdhead="yes" headvaluetype="u16" usdheadex="th" /> -->
+	<!-- ex <a headadd_ft="yes" headadd_ft_type="u32" /> -->
+	
+	<a a="msgidrangemin" desc="如果是消息的话，这里给出消息的id的最低值，包含在内" />
+	<a a="msgidrangemax" desc="如果是消息的话，这里给出消息的id的最大值，包含在内" />
+	<a a="msgidrand" desc="消息是否，采用随机的id 主要是防破解 如果不需要可以不写" />
+	<!-- <a msgidrangemin="1" msgidrangemax="10000" msgidrand="yes" /> -->
+	
+	<a a="usd_svr_pi_ar" desc="是否开始svr pi ar模式" />
+	<!-- ex: <a usd_svr_pi_ar="yes" /> -->
+	
+	<a a="usd_check_pkg_max_len" desc="是否对消息包进行大小限制检查" />
+	<!-- ex: <a usd_check_pkg_max_len="63" /> -->
+	
+	<a a="includefile" a="classdefine" a="cppincludefile" />
+	<!-- ex: <a includefile="__try_catch__.h" /> <a classdefine="CHjzMySql" /> <a includefile="vector" /> -->
+	<!-- <a cppincludefile="string" /> 可以包含多个，都会有效 -->
+	
+	<a a="primarykey" a="dblinkip" a="port" a="usr" a="pswd" desc="数据库的主键连接信息" />
+	<!-- ex: <a primarykey="日期" /> <a dblinkip="127.0.0.1" port="3306" usr="root" pswd="1234qwer" /> -->
+	
+	<a a="db_pki_autoadd" desc="database primarykey id 自动增加，默认为no，必须yes，才开若无prikey，yes也不开" />
+	<!-- ex: <a db_pki_autoadd="yes" /> 说一下，设定的primary key必须是int，不是int，的话不动-->
+	<!-- 如果，没有primary key，就算是yes，也不动-->
+	<a a="db_pkiaa_ival" desc="如果id是自动增加的话，这个值作为自动增加的开始值" />
+	<!-- ex: <a db_pkiaa_ival="10000" /> 这个值，不能是负数，负数自动为1，0总是不用的，不要太大了-->
+	
+	<a a="dbname" a="dbdesc" />
+	<!-- ex: <a dbname="CSocketDay" /> 	<a dbdesc="上市A股的股票日线" /> -->
+	
+	<a a="make_db_hms" desc="是否创建函数CreateHjzMySql,默认创建，如果不需要，填no" />
+	<!-- ex: <a make_db_hms="no" /> -->
+	
+	<!-- svr need 因为消息 to是有可能多向的，所以，这里会做，成套，的输出方式 区分在于增加下划线后缀-->
+	<!-- 比如: _0 _1 _2这样的方式 
+		<a make_nm_funcdef_prefix_0="CMainDo" />
+		<a make_nm_funcdef_prefix_1="COutDo" />
+		<a make_nm_funcdef_prefix_2="CSome" />
+		<a make_nm_funcdef_prefix_3="CDb" />
+		这样来做
+	-->
+	<a a="make_nm_funcdef_prefix" desc="因为需要输出到类上，所以需要给一个类的名字，有就是前缀" />
+	<!-- ex: <a make_nm_funcdef_prefix="CMainDo" /> -->
+	<a a="make_nm_funcdef_filename" desc="输出处理消息的函数定义文件 svr会用" />
+	<!-- ex: <a make_nm_funcdef_filename="test" /> 输出就是 test.funcdef -->
+	<a a="make_nm_case_filename" desc="输出case消息的函数文件" />
+	<!-- ex: <a make_nm_case_filename="test" /> out is test.docase -->
+	<a a="make_nm_cpp_filename" desc="输出函数的实现文件" />
+	<!-- ex: <a make_nm_cpp_filename="test" /> out is test.funcbody -->
+	<a a="make_nm_dir" desc="输出消息处理hpp，cxx，cxx的路径，因为有合并的情况，所以需要，不要轻易变更会影响合并代码" />
+	<!-- ex: <a make_nm_dir="D:\\test" /> -->
+	<a a="make_nm_ToWho" desc="选择到谁的消息进行相关的文件输出，因为消息的定义是全部和双向甚至是多向的，所以需要指定" />
+	<!-- ex: <a make_nm_ToWho="mai" /> -->
+	<a a="make_nm_funcdef_static" desc="使用静态函数定义" />
+	
+	<a a="make_nm_funcdef_prefix_0" desc="因为需要输出到类上，所以需要给一个类的名字，有就是前缀" />
+	<a a="make_nm_funcdef_filename_0" desc="输出处理消息的函数定义文件 svr会用" />
+	<a a="make_nm_case_filename_0" desc="输出case消息的函数文件" />
+	<a a="make_nm_cpp_filename_0" desc="输出函数的实现文件" />
+	<a a="make_nm_dir_0" desc="输出消息处理hpp，cxx，cxx的路径，因为有合并的情况，所以需要，不要轻易变更会影响合并代码" />
+	<a a="make_nm_ToWho_0" desc="选择到谁的消息进行相关的文件输出，因为消息的定义是全部和双向甚至是多向的，所以需要指定" />
+	<a a="make_nm_funcdef_static_0" desc="使用静态函数定义" />
+	
+	<a a="make_nm_funcdef_prefix_1" />
+	<a a="make_nm_funcdef_filename_1" />
+	<a a="make_nm_case_filename_1" />
+	<a a="make_nm_cpp_filename_1" />
+	<a a="make_nm_dir_1" />
+	<a a="make_nm_ToWho_1" />
+	<a a="make_nm_funcdef_static_1" />
+	
+	<a a="enum_in" desc="结构体的enum在结构体内部定义 val=yes:no" />
+	<!-- ex: <a enum_in="no" /> 只有结构体 才会用到 -->
+	
+	<!-- 2019年5月8日17:41:17 新增加golang的db对应的输出 -->
+	<a a="gopkgname" desc="golang的包的名字" /> 
+	<a a="gopkgdesc" desc= "golang的包的描述" /> 
+	<a a="gostructname" desc= "golang对应的struct到数据库，或者就是普通的" />
+	<a a="gostructdesc" desc= "golang对应的struct或者db，的描述" />
+	
+</headkey>
+
+<head alltype="dbgolang" >
+	<a gopkgname="CCG_LoginLog" gopkgdesc="golang的包的描述，注释 就是那个package的名字" />
+	<a gostructname="CCG_LoginLogDb" gostructdesc="golang的对应db的结构的描述，就是数据库里面的多少列，对应的go的结构体" />
+	
+	<a outfile="CCG_LoginLog.go" />
+	<a outdir=".\" />
+	
+	<!-- <a classdefine="CHjzMySql" /> -->
+	<a includefile="database/sql" />
+	<a includefile="strconv" />
+	<a includefile="github.com/glog" />
+	<a includefile="github.com/go-sql-driver/mysql" />
+	
+	<!-- <a cppincludefile="HjzMySql/HjzMySql.h" /> -->
+	<!-- <a cppincludefile="stdio.h" /> -->
+	
+	<a primarykey="SortId" />
+	<!-- <a dblinkip="127.0.0.1" port="3306" usr="root" pswd="1234qwer" /> -->
+	
+	<a make_db_hms="yes" />
+</head>
+
+<!-- bigint 从 -2^63 (-9223372036854775808) 到 2^63-1 (9223372036854775807) 
+的整型数据（所有数字）。存储大小为 8 个字节。-->
+<!-- int 从 -2^31 (-2,147,483,648) 到 2^31 - 1 (2,147,483,647) 
+的整型数据（所有数字）。存储大小为 4 个字节。int 的 SQL-92 同义字为 integer。-->
+<!-- smallint 从 -2^15 (-32,768) 到 2^15 - 1 (32,767) 的整型数据。
+存储大小为 2 个字节。-->
+<!-- tinyint 从 0 到 255 的整型数据。存储大小为 1 字节。-->
+
+<!-- 不要用关键字，尤其是mysql的关键字 Desc就是 -->
+<!-- 不要用关键字，尤其是mysql的关键字 Desc就是 -->
+<!-- 不要用关键字，尤其是mysql的关键字 Desc就是 -->
+
+<!-- go目前用的那个mysql非官方的，没有blob二进制，现在类型只有int和string，go中一律int和string -->
+<!-- go目前用的那个mysql非官方的，没有blob二进制，现在类型只有int和string，go中一律int和string -->
+<!-- go目前用的那个mysql非官方的，没有blob二进制，现在类型只有int和string，go中一律int和string -->
+
+<!-- 
+<db 
+	sm="code" 说一下，这个是注释 
+	type="string" 这个是go中内存上的类型，只有int和string	
+	name="Code" 这个是go中的变量的名字，完全搬到代码里面，首字母大写public，go的暗扣		
+	writefunc="1" go中没有用到
+	readfunc="1" go中没有用的到
+	desc="code" db数据库中，列的名字，可以中文(要配置表和库的编码)，最好英文
+	dbtype="VARCHAR" db中的类型，mysql弄了好多好多类型，复杂着呢
+	dblen="64" db中的长度，mysql中的长度，一般int是10，string看需求
+/>
+-->
+
+<!-- sortid 唯一 -->
+<db	sm="SortId" type="int"	name="SortId"		writefunc="1"	readfunc="1"	desc="SortId"	dbtype="int"	dblen="9" />
+
+<!-- 用户登陆的名字，a-z，0-9 @ . 其他符号不允许 -->
+<db	sm="UsrId" type="int"	name="UsrId"	writefunc="1"	readfunc="1"	desc="UsrId"	dbtype="int"		dblen="9"/>
+
+<!-- 用户的ip地址 -->
+<db	sm="Ip" type="string"	name="Ip"	writefunc="1"	readfunc="1"	desc="Ip"	dbtype="VARCHAR"		dblen="16"/>
+
+<!-- 用户的ip时间 -->
+<db	sm="DateTime" type="string"	name="DateTime"	writefunc="1"	readfunc="1"	desc="DateTime"	dbtype="VARCHAR"		dblen="32"/>
+
+<!-- 用户的设备类型 -->
+<db	sm="DeviceType" type="int"	name="DeviceType"	writefunc="1"	readfunc="1"	desc="DeviceType"	dbtype="int"		dblen="9"/>
