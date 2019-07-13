@@ -1,0 +1,160 @@
+syntax = "proto2";
+
+package ccg_pb;
+
+//Req
+//Respone
+
+//用户名登陆
+message login_namepasswordReq {
+  required string name = 1;
+  required string password = 2;
+  required int DeviceType = 3;
+}
+
+//设备登陆
+message login_udidReq {
+  required string udid = 1;
+  required int DeviceType = 2;
+}
+
+//微信QQ
+message login_udidReq {
+  required string udid = 1;
+  required int DeviceType = 2;
+  required string headurl = 3;
+  required int type = 4;
+}
+
+//登陆反馈
+message login_Respone {
+  required int type = 1;//errorcode 0 success 
+  required string nick = 2;
+  required int id = 3;
+}
+
+//开房间
+message room_createReq {
+  required int id = 1;
+  required int roomtype = 2;//
+}
+
+//开房间反馈
+message room_createRespone {
+  required int errorcode = 1;
+  required int roomid = 2;//
+}
+
+//开房间
+message room_joinReq {
+  required int id = 1;
+  required int roomid = 2;//
+}
+
+//开房间反馈
+message room_joinRespone {
+  required int errorcode = 1;
+  optional  PlayerData = 2;
+}
+
+//玩家信息
+message PlayerData {
+  required int id = 1;
+  required string nick = 2;//
+  required string headurl = 3;
+  required int status=4;
+}
+
+//玩家准备
+message room_playerReadyRespone {
+  required int id = 1;
+
+}
+
+//玩家准备反馈信息
+message room_playerReadyRespone {
+  required int id = 1;
+}
+
+//服务器发牌
+message room_gamestartRespone{
+  required int id = 1;//提交者id
+  optional poker  pk = 2;
+}
+
+//牌
+message poker {
+  required int id = 1;
+  required int type = 2;
+}
+
+//叫分
+message call {
+  required int id = 1;
+  required int num = 2;
+}
+//叫分反馈信息
+message call_Respone {
+  required int id = 1;
+  required int num = 2;
+  required int nextcallid = 3;
+}
+
+//开始
+message call_begin_Respone{
+  required int id = 1;
+  required int num = 2;
+}
+//出牌
+message pokerout{
+  required int id = 1;//提交者id
+  optional poker  pk = 2;
+}
+
+//出牌反馈信息
+message pokerout_Respone{
+  required int id = 1;//提交者id
+  optional poker  pk = 2;
+  required int nextid = 3;//下一个提交者id
+}
+//结算
+message gameend_Respone{
+  
+}
+
+//聊天
+message chattext{
+  required int id = 1;
+  required int textid = 2;
+}
+
+//表情
+message chatemo{
+  required int id = 1;
+  required int emoid = 2;p
+}
+
+//文本聊天
+message chatstring{
+  required int id = 1;
+  required string str = 2;
+}
+
+//聊天
+message chattext_Respone{
+  required int id = 1;
+  required int textid = 2;
+}
+
+//表情
+message chatemo_Respone{
+  required int id = 1;
+  required int emoid = 2;
+}
+
+//文本聊天
+message chatstring_Respone{
+  required int id = 1;
+  required string str = 2;
+}
+
