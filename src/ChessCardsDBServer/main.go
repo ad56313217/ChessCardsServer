@@ -8,56 +8,12 @@
 package main
 
 import (
-	CCG_Login "ChessCardsDBServer/DataTable/CCG_Login"
-	"database/sql"
+	tcpManager "ChessCardsDBServer/Logic"
 	"fmt"
 	"net"
 
 	_ "github.com/go-sql-driver/mysql"
 )
-
-const (
-	USERNAME = "root"
-	PASSWORD = "123456"
-	NETWORK  = "tcp"
-	SERVER   = "101.132.149.251"
-	PORT     = 3306
-	DATABASE = "ChessCards"
-)
-
-/*
-func main() {
-	dsn := fmt.Sprintf("%s:%s@%s(%s:%d)/%s", USERNAME, PASSWORD, NETWORK, SERVER, PORT, DATABASE)
-	DB, err := sql.Open("mysql", dsn)
-	if err != nil {
-		fmt.Printf("Open mysql failed,err:%v\n", err)
-		return
-	}
-	//GoTest.CreateDb("chesscards", DB)
-
-	if CCG_Login.IsHasTable("ChessCards", "CCG_Login", DB) == false {
-		if CCG_Login.CreateTable("ChessCards", "CCG_Login", DB) == false {
-			fmt.Printf("CCG_Login  create table faile!")
-			return
-		}
-		if CCG_LoginLog.CreateTable("ChessCards", "CCG_LoginLog", DB) == false {
-			fmt.Printf("CCG_LoginLog  create table faile!")
-			return
-		}
-		if CCG_LogoutLog.CreateTable("ChessCards", "CCG_LogoutLog", DB) == false {
-			fmt.Printf("CCG_LogoutLog  create table faile!")
-			return
-		}
-	}
-
-	CreateTest(DB)
-}
-
-//建表
-func CreateTest(poDb *sql.DB) {
-
-}
-*/
 
 var ConnMap map[string]*net.TCPConn
 
@@ -81,25 +37,13 @@ func process(con net.Conn) {
 			//3.服务器显示客户端信息
 			//fmt.Printf("收到了客户端（IP：%v）%d 个字节数据",con.RemoteAddr().String(),n)
 			fmt.Printf("From Client %s Data:%s ", con.RemoteAddr().String(), string(buf[:n]))
-
-			dsn := fmt.Sprintf("%s:%s@%s(%s:%d)/%s", USERNAME, PASSWORD, NETWORK, SERVER, PORT, DATABASE)
-			DB, err := sql.Open("mysql", dsn)
-			if err != nil {
-				fmt.Printf("Open mysql failed,err:%v\n", err)
-				return
-			}
-			//对表，进行相关的处理
-			oIn := CCG_Login.CCG_LoginDb{
-				Id:      2,
-				UsrName: string(buf[:n]),
-			}
-			_b := CCG_Login.FInsToTbl("CCG_Login", DB, &oIn)
-			if _b == false {
-				//return
-				fmt.Printf("write db faile!")
+			_b, mesInfo := tcpManager.ImplementMessage(string(buf[:n]))
+			if _b == true {
+				con.Write([]byte(mesInfo))
+			} else {
+				con.Write([]byte(mesInfo))
 			}
 
-			con.Write([]byte("456"))
 		}
 
 		// flag := checkErr(err)
@@ -118,6 +62,7 @@ func process(con net.Conn) {
 }
 
 func main() {
+	tcpManager.ImplementMessage("login,test,11")
 	fmt.Println("Server Start Listion...")
 	//1.tcp表示使用网络协议是tcp
 	//2.0.0.0.0:8888表示在本地监听8888端口
