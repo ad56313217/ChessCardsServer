@@ -25,7 +25,7 @@ func ImplementLogic(Mes string) (bool, string) {
 
 	if target != "" { // 不为空则表示MesInfo[1]存在
 		if target == "login" {
-			return loginLogic(Mes), ""
+			return loginLogic(Mes)
 		}
 		if target == "register" {
 			return registerLogic(Mes)
@@ -54,25 +54,29 @@ func getArrayValueByStringMes(Index int, Mes string) string {
 	return target
 }
 
-func loginLogic(Mes string) bool {
+func loginLogic(Mes string) (bool, string) {
 
 	dsn := fmt.Sprintf("%s:%s@%s(%s:%d)/%s", USERNAME, PASSWORD, NETWORK, SERVER, PORT, DATABASE)
 	DB, err := sql.Open("mysql", dsn)
 	if err != nil {
 		fmt.Printf("Open mysql failed,err:%v\n", err)
-		return false
+		return false, "mysql is failed"
 	}
-	//对表，进行相关的处理
-	oIn := CCG_Login.CCG_LoginDb{
-		Id:      2,
-		UsrName: string("11"),
+
+	//检测用户名是否存在
+	info, _checkName := CCG_Login.FGetByUsrName("CCG_Login", DB, getArrayValueByStringMes(2, Mes))
+	if _checkName == true {
+		fmt.Sprintf("ccg_loginLogic | UserNameId: %d", info.Id)
+		//return false, "UserName is exist!"
+	} else {
+		fmt.Printf("ccg_loginLogic | no userName")
+		return false, "userName is not exist!"
 	}
-	_b := CCG_Login.FInsToTbl("CCG_Login", DB, &oIn)
-	if _b == false {
-		//return
-		fmt.Printf("write db faile!")
+
+	if info.PassWord == getArrayValueByStringMes(3, Mes) {
+		return true, "login success!"
 	}
-	return true
+	return false, "ccg_loginLogic | password not true"
 }
 
 func registerLogic(Mes string) (bool, string) {
@@ -83,16 +87,17 @@ func registerLogic(Mes string) (bool, string) {
 		return false, "mysql is failed"
 	}
 
+	//检测用户名是否存在
 	info, _checkName := CCG_Login.FGetByUsrName("CCG_Login", DB, getArrayValueByStringMes(2, Mes))
 	if _checkName == true {
 		fmt.Sprintf("ccg_loginLogic | UserNameId: %d", info.Id)
 		return false, "UserName is exist!"
 	} else {
-		fmt.Printf("ccg_loginLogic | no userName")
+		fmt.Printf("ccg_loginLogic | no userName\n")
 	}
 
 	tableAll := CCG_Login.FGetAll("CCG_Login", DB)
-	_id := len(tableAll) + 1
+	_id := tableAll[len(tableAll)-1].Id + 1
 	//对表，进行相关的处理
 	oIn := CCG_Login.CCG_LoginDb{
 		Id:       _id,
@@ -102,7 +107,7 @@ func registerLogic(Mes string) (bool, string) {
 	_b := CCG_Login.FInsToTbl("CCG_Login", DB, &oIn)
 	if _b == false {
 		//return
-		fmt.Printf("write db faile!")
+		fmt.Printf("write db faile!\n")
 		return false, "write db faile!"
 	}
 	return true, "register success!"
@@ -118,9 +123,9 @@ func test(Mes string) bool {
 
 	info, _b := CCG_Login.FGetByUsrName("CCG_Login", DB, "11")
 	if _b == true {
-		fmt.Sprintf("ccg_loginLogic | UserNameId: %d", info.Id)
+		fmt.Sprintf("ccg_loginLogic | UserNameId: %d\n", info.Id)
 	} else {
-		fmt.Printf("ccg_loginLogic | no userName")
+		fmt.Printf("ccg_loginLogic | no userName\n")
 	}
 	return true
 }

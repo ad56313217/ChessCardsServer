@@ -62,7 +62,7 @@ func process(con net.Conn) {
 }
 
 func main() {
-	tcpManager.ImplementMessage("login,test,11")
+	tcpManager.ImplementMessage("login,register,hqx2,12345")
 	fmt.Println("Server Start Listion...")
 	//1.tcp表示使用网络协议是tcp
 	//2.0.0.0.0:8888表示在本地监听8888端口
